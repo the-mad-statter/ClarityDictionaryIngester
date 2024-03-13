@@ -1,6 +1,28 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# ClarityDictionaryIngester <img src="man/figures/logo.png" align="right" width="125px" />
+
+<!-- badges: start -->
+
+[![Project Status: WIP - Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![](https://img.shields.io/github/last-commit/the-mad-statter/ClarityDictionaryIngester.svg)](https://github.com/the-mad-statter/ClarityDictionaryIngester/commits/main)
+[![License: GPL (\>=
+3)](https://img.shields.io/badge/license-GPL%20(%3E=%203)-blue.svg)](https://cran.r-project.org/web/licenses/GPL%20(%3E=%203))
+<br /> [![R build
+status](https://github.com/the-mad-statter/ClarityDictionaryIngester/workflows/style/badge.svg)](https://github.com/the-mad-statter/ClarityDictionaryIngester/actions)
+[![R build
+status](https://github.com/the-mad-statter/ClarityDictionaryIngester/workflows/lint/badge.svg)](https://github.com/the-mad-statter/ClarityDictionaryIngester/actions)
+[![R build
+status](https://github.com/the-mad-statter/ClarityDictionaryIngester/workflows/test-coverage/badge.svg)](https://github.com/the-mad-statter/ClarityDictionaryIngester/actions)
+[![](https://codecov.io/gh/the-mad-statter/ClarityDictionaryIngester/branch/main/graph/badge.svg)](https://codecov.io/gh/the-mad-statter/ClarityDictionaryIngester)
+[![R build
+status](https://github.com/the-mad-statter/ClarityDictionaryIngester/workflows/r-cmd-check/badge.svg)](https://github.com/the-mad-statter/ClarityDictionaryIngester/actions)
+<!-- badges: end -->
+
 ## Overview
 
 The goal of `ClarityDictionaryIngester` is to provide helpful functions

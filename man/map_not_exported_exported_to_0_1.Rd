@@ -16,9 +16,9 @@ map_not_exported_exported_to_0_1(x)
 Map "Not Exported"/"Exported" to 0/1
 }
 \examples{
-map_not_exported_exported_to_0_1("Not Exported")
+ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Not Exported")
 
-map_not_exported_exported_to_0_1("Exported")
+ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Exported")
 
-map_not_exported_exported_to_0_1("Imported")
+ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Imported")
 }

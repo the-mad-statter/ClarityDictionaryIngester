@@ -16,9 +16,9 @@ map_no_yes_to_0_1(x)
 Map No/Yes to 0/1
 }
 \examples{
-map_no_yes_to_0_1("No")
+ClarityDictionaryIngester:::map_no_yes_to_0_1("No")
 
-map_no_yes_to_0_1("Yes")
+ClarityDictionaryIngester:::map_no_yes_to_0_1("Yes")
 
-map_no_yes_to_0_1("Maybe")
+ClarityDictionaryIngester:::map_no_yes_to_0_1("Maybe")
 }

@@ -5,11 +5,11 @@
 #' @return 0 for "No", 1 for "Yes", NA otherwise
 #'
 #' @examples
-#' map_no_yes_to_0_1("No")
+#' ClarityDictionaryIngester:::map_no_yes_to_0_1("No")
 #'
-#' map_no_yes_to_0_1("Yes")
+#' ClarityDictionaryIngester:::map_no_yes_to_0_1("Yes")
 #'
-#' map_no_yes_to_0_1("Maybe")
+#' ClarityDictionaryIngester:::map_no_yes_to_0_1("Maybe")
 map_no_yes_to_0_1 <- function(x) {
   dplyr::case_when(
     x == "No" ~ 0,
@@ -25,11 +25,11 @@ map_no_yes_to_0_1 <- function(x) {
 #' @return 0 for "Not Exported", 1 for "Exported", NA otherwise
 #'
 #' @examples
-#' map_not_exported_exported_to_0_1("Not Exported")
+#' ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Not Exported")
 #'
-#' map_not_exported_exported_to_0_1("Exported")
+#' ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Exported")
 #'
-#' map_not_exported_exported_to_0_1("Imported")
+#' ClarityDictionaryIngester:::map_not_exported_exported_to_0_1("Imported")
 map_not_exported_exported_to_0_1 <- function(x) {
   dplyr::case_when(
     x == "Not Exported" ~ 0,

@@ -34,7 +34,7 @@ create_table_zc_ny <- function(con) {
 
 #' Create Table zc_ehi_status
 #'
-#' @param con
+#' @param con database connection
 #'
 #' @return returns TRUE, invisibly
 #'
@@ -68,7 +68,7 @@ create_table_zc_ehi_status <- function(con) {
 #' Create Table
 #'
 #' @param con database connection
-#' @param table_name name of table to create
+#' @param table name of table to create
 #'
 #' @return TRUE
 #'
@@ -171,7 +171,7 @@ create_table <- function(
 #' Drop Table
 #'
 #' @param con database connection
-#' @param table_name name of table to drop
+#' @param table name of table to drop
 #'
 #' @return TODO
 #'

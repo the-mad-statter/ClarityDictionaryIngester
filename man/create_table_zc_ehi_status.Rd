@@ -7,7 +7,7 @@
 create_table_zc_ehi_status(con)
 }
 \arguments{
-\item{con}{}
+\item{con}{database connection}
 }
 \value{
 returns TRUE, invisibly

@@ -13,7 +13,7 @@ drop_table(
 \arguments{
 \item{con}{database connection}
 
-\item{table_name}{name of table to drop}
+\item{table}{name of table to drop}
 }
 \value{
 TODO
