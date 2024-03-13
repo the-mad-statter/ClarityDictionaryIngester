@@ -258,18 +258,13 @@ ingest_column_information_table <- function(b,
 
   purrr::map_dfr(
     seq_along(init_trs),
-    function(column_i,
-             b = b,
-             init_trs = init_trs,
-             column_n = length(init_trs),
-             table = table,
-             table_i = table_i,
-             table_n = table_n,
-             con = con) {
+    function(column_i) {
       time_start <- Sys.time()
 
       read_result <- tryCatch(
         {
+          column_n <- length(init_trs)
+
           data <- scrape_column_information(
             b,
             init_trs[column_i],

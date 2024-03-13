@@ -54,8 +54,9 @@
 clarity_dictionary_ingest <- function(tables, b, con) {
   purrr::map_dfr(
     seq_along(tables),
-    function(table_i, tables = tables, table_n = length(tables)) {
+    function(table_i) {
       table <- tables[table_i]
+      table_n <- length(tables)
 
       navigate_to_table(b, table)
 
