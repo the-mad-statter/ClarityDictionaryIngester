@@ -2,6 +2,10 @@
 
 export("%>%")
 export(.data)
+export(clarity_dictionary_chromote_session_close)
+export(clarity_dictionary_chromote_session_open)
+export(clarity_dictionary_database_connect)
+export(clarity_dictionary_database_disconnect)
 export(clarity_dictionary_drop_all)
 export(clarity_dictionary_ingest)
 export(clarity_dictionary_init)

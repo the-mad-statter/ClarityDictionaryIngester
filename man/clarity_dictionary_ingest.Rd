@@ -25,47 +25,28 @@ Clarity Dictionary Ingest
 }
 \examples{
 \dontrun{
+
 ## 0. Setup
 # - Ensure Windows OS ODBC Data Sources is configured with unexpired token
 # - may have to wait for cluster startup on connect
 
-
-
 ## 1. Connect to Database
-con <- DBI::dbConnect(
-  drv = odbc::odbc(),
-  dsn = "Databricks"
-)
-
-
+con <- clarity_dictionary_database_connect("Omicron Persi 8")
 
 ## 2. Prepare Database (if needed)
 clarity_dictionary_drop_all(con)
 clarity_dictionary_init(con)
 
-
-
 ## 3. Select Tables for Processing
 tables_to_ingest <- clarity_dictionary_select_tables_to_ingest(con)
 
-
-
 ## 4. Setup Browser
-b <- chromote::ChromoteSession$new()
-b$view()
-b$Page$navigate("https://datahandbook.epic.com/ClarityDictionary")
+b <- clarity_dictionary_chromote_session_open()
 
-
-
-## 5. Manual Login in Chromote Window
-
-
+## 5. manual login
 
 ## 6. Ingest
-results <- clarity_dictionary_ingest(tables_to_ingest, b, con)
-results
-
-
+clarity_dictionary_ingest(tables_to_ingest, b, con)
 
 ## 7. On Error
 # Could drop the last table ingested and all associated records:
@@ -75,10 +56,11 @@ tables_to_ingest <-
 # Could also revert the entire database to a known good timestamp:
 clarity_dictionary_revert_all(con, "2024-03-07T14:19:08Z")
 
-
-
 ## 8. Clean Up
-b$parent$close()
-DBI::dbDisconnect(con)
+clarity_dictionary_chromote_session_close(b)
+clarity_dictionary_database_disconnect(con)
+
+## 9. Query full dictionary
+clarity_dictionary_select_all(con)
 }
 }
