@@ -397,7 +397,7 @@ select_clarity_tables <- function(con) {
     statement
   ) %>%
     dplyr::transmute(
-      name = toupper(sub("clarity_orgfilter_", "", .data["tableName"]))
+      name = toupper(sub("clarity_orgfilter_", "", .data[["tableName"]]))
     )
 }
 

@@ -295,9 +295,9 @@ clarity_dictionary_revert_last_table <- function(con, x) {
   )
   result <- DBI::dbGetQuery(con, statement)
   result_drop_table <- result %>%
-    dplyr::filter(.data["dl_load_ts"] == max(.data["dl_load_ts"]))
+    dplyr::filter(.data[["dl_load_ts"]] == max(.data[["dl_load_ts"]]))
   result_keep_table <- result %>%
-    dplyr::filter(.data["dl_load_ts"] == min(.data["dl_load_ts"]))
+    dplyr::filter(.data[["dl_load_ts"]] == min(.data[["dl_load_ts"]]))
 
   message(sprintf(
     "Reverting database to timestamp: %s...",
@@ -344,9 +344,9 @@ clarity_dictionary_select_tables_to_ingest <- function(con) {
   select_clarity_tables(con) %>%
     dplyr::anti_join(
       select_ingested_tables(con),
-      by = dplyr::join_by(.data["name"])
+      by = dplyr::join_by(.data[["name"]])
     ) %>%
-    dplyr::pull(.data["name"])
+    dplyr::pull(.data[["name"]])
 }
 
 #' Clarity Dictionary Chromote Session Open
