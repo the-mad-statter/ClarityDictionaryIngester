@@ -344,7 +344,7 @@ clarity_dictionary_select_tables_to_ingest <- function(con) {
   select_clarity_tables(con) %>%
     dplyr::anti_join(
       select_ingested_tables(con),
-      by = dplyr::join_by(.data[["name"]])
+      by = "name"
     ) %>%
     dplyr::pull(.data[["name"]])
 }
