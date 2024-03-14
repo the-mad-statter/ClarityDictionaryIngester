@@ -31,9 +31,9 @@ centralized resource that helps one search the Clarity data model to
 achieve reporting goals. The Dictionary is designed as a series of
 webpages for a human to navigate and search for information, but such a
 design makes programmatic access difficult. Programmatic access to the
-Dictionary would facilitate accomplishing other goals such as analysis
-of the available information in the Dictionary as well as automation of
-data dictionary creation in a data brokerage setting.
+Dictionary facilitates accomplishing other goals such as analysis of the
+available information in the Dictionary as well as automation of data
+dictionary creation in a data brokerage setting.
 
 The goal of
 [{ClarityDictionaryIngester}](https://github.com/the-mad-statter/ClarityDictionaryIngester)

@@ -78,7 +78,7 @@ sticker(
 
 ## Overview
 
-The [EPIC Clarity Dictionary](https://datahandbook.epic.com/ClarityDictionary) is a centralized resource that helps one search the Clarity data model to achieve reporting goals. The Dictionary is designed as a series of webpages for a human to navigate and search for information, but such a design makes programmatic access difficult. Programmatic access to the Dictionary would facilitate accomplishing other goals such as analysis of the available information in the Dictionary as well as automation of data dictionary creation in a data brokerage setting.
+The [EPIC Clarity Dictionary](https://datahandbook.epic.com/ClarityDictionary) is a centralized resource that helps one search the Clarity data model to achieve reporting goals. The Dictionary is designed as a series of webpages for a human to navigate and search for information, but such a design makes programmatic access difficult. Programmatic access to the Dictionary facilitates accomplishing other goals such as analysis of the available information in the Dictionary as well as automation of data dictionary creation in a data brokerage setting.
 
 The goal of [{`r params$repository`}](`r sprintf("https://github.com/%s/%s", params$organization, params$repository)`) is to provide helpful functions for ingesting the EPIC Clarity Dictionary into a database, thus enabling programmatic access.
 
