@@ -1,8 +1,8 @@
 ---
 output: github_document
 params:
-  github: the-mad-statter
-  package: ClarityDictionaryIngester
+  organization: the-mad-statter
+  repository: ClarityDictionaryIngester
   font: ROCK
   font_ext: TTF
   color: "#a51417"
@@ -43,7 +43,7 @@ sticker(
   s_y = 1.27,
   s_width = 0.45,
   s_height = 0.45,
-  package = params$package,
+  repository = params$repository,
   p_x = 1,
   p_y = 0.65,
   p_color = params$color,
@@ -51,7 +51,7 @@ sticker(
   p_size = 10,
   h_fill = "#ffffff",
   h_color = params$color,
-  url = paste("github.com", params$github, params$package, sep = "/"),
+  url = sprintf("github.com/%s/%s", params$organization, params$repository),
   u_color = "black",
   u_family = params$font,
   u_size = 3,
@@ -61,7 +61,7 @@ sticker(
 )
 ```
 
-# `r params$package` <img src="man/figures/logo.png" align="right" width="125px" />
+# `r params$repository` <img src="man/figures/logo.png" align="right" width="125px" />
 
 <!-- badges: start -->
 `r badger::badge_repostatus("WIP")`
@@ -72,43 +72,120 @@ sticker(
 `r badger::badge_github_actions(action = "style")`
 `r badger::badge_github_actions(action = "lint")`
 `r badger::badge_github_actions(action = "test-coverage")`
-`r badger::badge_codecov()`
+`r badger::badge_codecov(branch = "main")`
 `r badger::badge_github_actions(action = "r-cmd-check")`
 <!-- badges: end -->
 
 ## Overview
 
-The goal of ``r params$package`` is to provide helpful functions for ingesting the EPIC Clarity Dictionary into a database.
+The [EPIC Clarity Dictionary](https://datahandbook.epic.com/ClarityDictionary) is a centralized resource that helps one search the Clarity data model to achieve reporting goals. The Dictionary is designed as a series of webpages for a human to navigate and search for information, but such a design makes programmatic access difficult. Programmatic access to the Dictionary would facilitate accomplishing other goals such as analysis of the available information in the Dictionary as well as automation of data dictionary creation in a data brokerage setting.
+
+The goal of [{`r params$repository`}](`r sprintf("https://github.com/%s/%s", params$organization, params$repository)`) is to provide helpful functions for ingesting the EPIC Clarity Dictionary into a database, thus enabling programmatic access.
+
+## Usage
+
+Setup
+
+1. If on Windows one option to manage database drivers and data sources is through the [ODBC Data Sources Administrator](https://learn.microsoft.com/en-us/host-integration-server/core/odbc-data-source-administrator).
+2. If using token authentication with tokens that expire, ensure the token is not expired.
+3. If connecting to a Databricks cluster, R will hang as the cluster starts up.
+    
+```
+# 1. Connect to Database
+con <- clarity_dictionary_database_connect()
+
+# 2. Prepare Database (if needed)
+## drop all dictionary tables to remove any dictionary data from the database
+clarity_dictionary_drop_all(con)
+
+## initiate all dictionary tables if the tables do not yet exist
+clarity_dictionary_init(con)
+
+# 3. Select Tables for Processing
+## Generate a vector of table names to ingest by comparing the names of 
+## Clarity tables in the database to names of tables that have already been 
+## ingested
+tables_to_ingest <- clarity_dictionary_select_tables_to_ingest(con)
+
+# 4. Setup Browser
+## The ingestion process uses {Chromote}](https://github.com/rstudio/chromote)
+b <- clarity_dictionary_chromote_session_open()`
+
+# 5. Manual Login
+## Go to the Chromote window and manually login.
+
+# 6. Ingest
+## Start documentation ingestion
+clarity_dictionary_ingest(tables_to_ingest, b, con)
+
+# 7. On Error
+## Check the log file "clarity_dictionary_ingester_log.csv" for clues.
+
+## Depending on what went wrong, one could drop the last table (partially) 
+## ingested and all associated records:
+tables_to_ingest <- clarity_dictionary_revert_last_table(con, tables_to_ingest)
+
+## One could instead revert the entire database to a known good timestamp:
+clarity_dictionary_revert_all(con, "2024-03-07T14:19:08Z")
+
+## The vector of table names to ingest should be updated accordingly and then 
+## repeat Step 7.
+
+# 8. Clean Up
+## Close the Chromote session:
+clarity_dictionary_chromote_session_close(b)
+
+## Close the database connection:
+clarity_dictionary_database_disconnect(con)
+```
+  
+Once the documentation for all tables has been ingested
+
+```
+## Query Full Dictionary in R:
+clarity_dictionary_select_all(con)
+
+## Or produce the full query SQL syntax:
+clarity_dictionary_select_all_sql()
+```
 
 <br />
 
 ## Installation
 
-You can install ``r params$package`` from [GitHub](https://github.com/`r params$github`/`r params$package`) with:
+You can install [{`r params$repository`}](`r sprintf("https://github.com/%s/%s", params$organization, params$repository)`) from [GitHub](https://github.com/`r params$organization`/`r params$repository`) with:
 
 ```r
-pak::pkg_install("`r params$github`/`r params$package`")
+pak::pkg_install("`r params$organization`/`r params$repository`")
 ```
 
-If necessary `pak` can be installed with:
+If necessary [{pak}](https://github.com/r-lib/pak) can be installed with:
 
 ```r
-install.packages("pak", repos = sprintf("https://r-lib.github.io/p/pak/stable/%s/%s/%s", .Platform$pkgType, R.Version()$os, R.Version()$arch))
+install.packages(
+  "pak", 
+  repos = sprintf(
+    "https://r-lib.github.io/p/pak/stable/%s/%s/%s", 
+    .Platform$pkgType, 
+    R.Version()$os, 
+    R.Version()$arch
+  )
+)
 ```
 
 <br />
 
 ## Code of Conduct
 
-Please note that the `r params$package` project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the [{`r params$repository`}](`r sprintf("https://github.com/%s/%s", params$organization, params$repository)`) project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 <br />
 
 ## Code Style
 
-This package attempts to follow the [tidyverse style guide](https://style.tidyverse.org/index.html).
+This repository attempts to follow the [tidyverse style guide](https://style.tidyverse.org/index.html).
 
-The use of [{styler}](https://github.com/r-lib/styler) and [{lintr}](https://github.com/r-lib/lintr) are recommended.
+The use of [{styler}](https://github.com/r-lib/styler), [{lintr}](https://github.com/r-lib/lintr), and [{devtools}](https://github.com/r-lib/devtools) are recommended.
 
 <br />
 

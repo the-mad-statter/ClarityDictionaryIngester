@@ -71,12 +71,89 @@ clarity_dictionary_ingest <- function(tables, b, con) {
 
 # nolint start: line_length_linter.
 
+#' Clarity Dictionary Select All Syntax
+#'
+#' @return SQL syntax for a full join of dictionary
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' clarity_dictionary_select_all_sql()
+#' }
+clarity_dictionary_select_all_sql <- function() {
+  paste(
+    c(
+      "SELECT ",
+      "  table.name AS table ",
+      "  , column.table_row ",
+      "  , column.name ",
+      "  , ini_item.ini ",
+      "  , ini_item.item ",
+      "  , type.name AS type",
+      "  , zc_ny_deprecated.name AS deprecated ",
+      "  , zc_ny_discontinued.name AS discontinued ",
+      "  , zc_ny_preserved.name AS preserved ",
+      "  , zc_ny_character_replacement.name AS character_replacement ",
+      "  , zc_ehi_status.name AS ehi_status ",
+      "  , column.description_id ",
+      "  , description.line ",
+      "  , description.description ",
+      "FROM ",
+      "  sandbox.wilcox_lab.clarity_dictionary_column AS column ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_table AS table ",
+      "  ON ",
+      "    column.table_id = table.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_type AS type ",
+      "  ON ",
+      "    column.type_c = type.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_column_ini_item_bridge AS column_ini_item_bridge ",
+      "  ON ",
+      "    column.id = column_ini_item_bridge.column_id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_ini_item AS ini_item ",
+      "  ON ",
+      "    column_ini_item_bridge.ini_item_id = ini_item.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_deprecated ",
+      "  ON ",
+      "    column.deprecated_c = zc_ny_deprecated.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_discontinued ",
+      "  ON ",
+      "    column.deprecated_c = zc_ny_discontinued.id ",
+      "LEFT JOIN ",
+      " sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_preserved ",
+      "  ON ",
+      "    column.deprecated_c = zc_ny_preserved.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_character_replacement ",
+      "  ON ",
+      "    column.deprecated_c = zc_ny_character_replacement.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_zc_ehi_status AS zc_ehi_status ",
+      "  ON ",
+      "    column.ehi_status_c = zc_ehi_status.id ",
+      "LEFT JOIN ",
+      "  sandbox.wilcox_lab.clarity_dictionary_description AS description ",
+      "  ON ",
+      "    column.description_id = description.id ",
+      "ORDER BY ",
+      "  table.name, column.table_row, ini_item.ini, ini_item.item, description.line; "
+    ),
+    collapse = "\n"
+  )
+}
+
+# nolint end
+
 #' Clarity Dictionary Select All
 #'
 #' @param con database connection
-#' @param cat cat the query instead of running it
 #'
-#' @return dataframe of entire clarity dictionary
+#' @return a dataframe of all dictionary data
 #' @export
 #'
 #' @examples
@@ -90,78 +167,9 @@ clarity_dictionary_ingest <- function(tables, b, con) {
 #'
 #' DBI::dbDisconnect(con)
 #' }
-clarity_dictionary_select_all <- function(con, cat = FALSE) {
-  q <- paste(
-    "SELECT ",
-    "  table.name AS table ",
-    "  , column.table_row ",
-    "  , column.name ",
-    "  , ini_item.ini ",
-    "  , ini_item.item ",
-    "  , type.name AS type",
-    "  , zc_ny_deprecated.name AS deprecated ",
-    "  , zc_ny_discontinued.name AS discontinued ",
-    "  , zc_ny_preserved.name AS preserved ",
-    "  , zc_ny_character_replacement.name AS character_replacement ",
-    "  , zc_ehi_status.name AS ehi_status ",
-    "  , column.description_id ",
-    "  , description.line ",
-    "  , description.description ",
-    "FROM ",
-    "  sandbox.wilcox_lab.clarity_dictionary_column AS column ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_table AS table ",
-    "  ON ",
-    "    column.table_id = table.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_type AS type ",
-    "  ON ",
-    "    column.type_c = type.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_column_ini_item_bridge AS column_ini_item_bridge ",
-    "  ON ",
-    "    column.id = column_ini_item_bridge.column_id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_ini_item AS ini_item ",
-    "  ON ",
-    "    column_ini_item_bridge.ini_item_id = ini_item.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_deprecated ",
-    "  ON ",
-    "    column.deprecated_c = zc_ny_deprecated.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_discontinued ",
-    "  ON ",
-    "    column.deprecated_c = zc_ny_discontinued.id ",
-    "LEFT JOIN ",
-    " sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_preserved ",
-    "  ON ",
-    "    column.deprecated_c = zc_ny_preserved.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_zc_ny zc_ny_character_replacement ",
-    "  ON ",
-    "    column.deprecated_c = zc_ny_character_replacement.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_zc_ehi_status AS zc_ehi_status ",
-    "  ON ",
-    "    column.ehi_status_c = zc_ehi_status.id ",
-    "LEFT JOIN ",
-    "  sandbox.wilcox_lab.clarity_dictionary_description AS description ",
-    "  ON ",
-    "    column.description_id = description.id ",
-    "ORDER BY ",
-    "  table.name, column.table_row, ini_item.ini, ini_item.item, description.line; ",
-    collapse = "\n"
-  )
-
-  if (cat) {
-    cat(q)
-  } else {
-    DBI::dbGetQuery(con, q)
-  }
+clarity_dictionary_select_all <- function(con) {
+  DBI::dbGetQuery(con, clarity_dictionary_select_all_sql())
 }
-
-# nolint end
 
 #' Clarity Dictionary Revert All
 #'

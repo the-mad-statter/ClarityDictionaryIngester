@@ -312,7 +312,11 @@ ingest_column_information_table <- function(b,
         write        = write_result
       )
 
-      readr::write_csv(results, "clarity_dictionary_log.csv", append = TRUE)
+      readr::write_csv(
+        results,
+        "clarity_dictionary_ingester_log.csv",
+        append = TRUE
+      )
 
       results
     }

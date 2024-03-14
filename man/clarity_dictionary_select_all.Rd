@@ -4,15 +4,13 @@
 \alias{clarity_dictionary_select_all}
 \title{Clarity Dictionary Select All}
 \usage{
-clarity_dictionary_select_all(con, cat = FALSE)
+clarity_dictionary_select_all(con)
 }
 \arguments{
 \item{con}{database connection}
-
-\item{cat}{cat the query instead of running it}
 }
 \value{
-dataframe of entire clarity dictionary
+a dataframe of all dictionary data
 }
 \description{
 Clarity Dictionary Select All
