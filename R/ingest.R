@@ -86,7 +86,8 @@ scrape_column_information <- function(
 
   message(
     sprintf(
-      "Processing Table: %s (%s of %s); Column: %s (%i of %i)...",
+      "%s Processing TBL: %s (%s of %s); COL: %s (%i of %i)...",
+      Sys.time(),
       table,
       table_i,
       table_n,
